@@ -1,7 +1,7 @@
 Version: 0.1.4
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 1%{?dist}
+Release: 2
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -163,5 +163,8 @@ exit 0
 %endif
 
 %changelog
+* Mon Dec 28 2020 sunguoshuai <sunguoshuai@huawei.com> - 0.1.4-2
+- Del the {dist} in release.
+
 * Tue Dec 8 2020 Ying Fang <fangying1@huawei.com>
 - Init the libcareplus package spec
