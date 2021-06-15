@@ -1,7 +1,7 @@
 Version: 0.1.4
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 3
+Release: 4
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -55,7 +55,7 @@ Patch0045: 0044-kpatch_ptrace-Split-function-kpatch_syscall_remote.patch
 Patch0046: 0045-kpatch_ptrace-Split-function-wait_for_mmap.patch
 Patch0047: 0046-kpatch_ptrace-Split-function-kpatch_ptrace_kickstart.patch
 
-BuildRequires: elfutils-libelf-devel libunwind-devel
+BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
 %if 0%{with selinux}
 BuildRequires: checkpolicy
@@ -210,6 +210,9 @@ exit 0
 %endif
 
 %changelog
+* Tue Jun 08 2021 wulei <wulei80@huawei.com> - 0.1.4-4
+- fixes failed: gcc: command not found
+
 * Tue Feb 09 2021 Jiajie Li <lijiajie11@huawei.com> - 0.1.4-3
 - Add basic support libcareplus on aarch64
 
