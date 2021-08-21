@@ -1,7 +1,7 @@
 Version: 0.1.4
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 4
+Release: 5
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -143,8 +143,8 @@ if [ $1 -eq 2 ]; then
 fi
 
 %preun
-%systemd_preun libcare.service
 %systemd_preun libcare.socket
+%systemd_preun libcare.service
 
 %postun
 %systemd_postun libcare.service
@@ -210,6 +210,9 @@ exit 0
 %endif
 
 %changelog
+* Sat Aug 21 2021 caodongxia <caodongxia@huawei.com> - 0.1.4-5
+- fixes uninstall warning
+
 * Tue Jun 08 2021 wulei <wulei80@huawei.com> - 0.1.4-4
 - fixes failed: gcc: command not found
 
