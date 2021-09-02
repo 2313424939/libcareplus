@@ -1,7 +1,9 @@
+%define with_selinux 1
+
 Version: 0.1.4
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 5
+Release: 6
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -60,13 +62,12 @@ BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 %if 0%{with selinux}
 BuildRequires: checkpolicy
 BuildRequires: selinux-policy-devel
-BuildRequires: /usr/share/selinux/devel/policyhelp
 %endif
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if 0%{with selinux}
-Requires:      libcare-selinux = %{version}-%{release}
+Requires:      libcareplus-selinux = %{version}-%{release}
 %endif
 
 %description
@@ -210,6 +211,9 @@ exit 0
 %endif
 
 %changelog
+* Thu Sep 02 2021 imxcc <xingchaochao@huawei.com>  - 0.1.4.6
+- enable selinux
+
 * Sat Aug 21 2021 caodongxia <caodongxia@huawei.com> - 0.1.4-5
 - fixes uninstall warning
 
