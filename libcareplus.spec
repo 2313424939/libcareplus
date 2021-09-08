@@ -3,7 +3,7 @@
 Version: 0.1.4
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 6
+Release: 7
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -56,6 +56,7 @@ Patch0044: 0043-kpatch_ptrace-Split-function-kpatch_arch_prctl_remot.patch
 Patch0045: 0044-kpatch_ptrace-Split-function-kpatch_syscall_remote.patch
 Patch0046: 0045-kpatch_ptrace-Split-function-wait_for_mmap.patch
 Patch0047: 0046-kpatch_ptrace-Split-function-kpatch_ptrace_kickstart.patch
+Patch0048: 0047-Allow-init_t-create-lnk-file.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -211,7 +212,10 @@ exit 0
 %endif
 
 %changelog
-* Thu Sep 02 2021 imxcc <xingchaochao@huawei.com>  - 0.1.4.6
+* Wed Sep 08 2021 imxcc <xingchaochao@huawei.com> - 0.1.4.7
+- selinux: Allow init_t create lnk file
+
+* Thu Sep 02 2021 imxcc <xingchaochao@huawei.com> - 0.1.4.6
 - enable selinux
 
 * Sat Aug 21 2021 caodongxia <caodongxia@huawei.com> - 0.1.4-5
