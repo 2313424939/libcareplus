@@ -3,7 +3,7 @@
 Version: 0.1.4
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 7
+Release: 8
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -212,6 +212,9 @@ exit 0
 %endif
 
 %changelog
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4.8
+- updated the README.en.md file
+
 * Wed Sep 08 2021 imxcc <xingchaochao@huawei.com> - 0.1.4.7
 - selinux: Allow init_t create lnk file
 
