@@ -3,12 +3,15 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 0
+Release: 2
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
 Source0: %{name}-%{version}.tar.gz
 
+Patch0001: fix-cblock-parse-for-LCOLD-LHOT-.cold.NUM-.init_arra.patch
+Patch0002: gensrc-we-should-add-align-while-FLAGS_PUSH_SECTION-.patch
+Patch0003: elf-add-section-adderss-for-STT_NOTYPE-type-of-symbo.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -166,6 +169,13 @@ exit 0
 %endif
 
 %changelog
+* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.2
+- gensrc: we should add align while FLAGS_PUSH_SECTION flag is set
+- elf: add section adderss for STT_NOTYPE type of symbol
+
+* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.1
+- fix cblock parse for LCOLD/LHOT/.cold.NUM, .init_array and support gnu_unique_object
+
 * Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.0
 - package init 1.0.0
 
