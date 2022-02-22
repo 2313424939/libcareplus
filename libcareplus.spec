@@ -3,7 +3,7 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 2
+Release: 3
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -77,35 +77,11 @@ make -C dist/selinux install \
 %endif
 
 
-install -m 0644 -D dist/libcare.service %{buildroot}%{_unitdir}/libcare.service
-install -m 0644 -D dist/libcare.socket %{buildroot}%{_unitdir}/libcare.socket
 install -m 0644 -D dist/libcare.preset %{buildroot}%{_presetdir}/90-libcare.preset
 
 %pre
 /usr/sbin/groupadd libcare -r 2>/dev/null || :
 /usr/sbin/usermod -a -G libcare qemu 2>/dev/null || :
-
-%post
-%systemd_post libcare.service
-%systemd_post libcare.socket
-
-if [ $1 -eq 1 ]; then
-        # First install
-        systemctl start libcare.socket
-fi
-if [ $1 -eq 2 ]; then
-        # Upgrade. Just stop it, we will be reactivated
-        # by a connect to /run/libcare.sock
-        systemctl stop libcare.service
-fi
-
-%preun
-%systemd_preun libcare.socket
-%systemd_preun libcare.service
-
-%postun
-%systemd_postun libcare.service
-%systemd_postun libcare.socket
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -113,10 +89,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{_bindir}/libcare-ctl
-%{_bindir}/libcare-client
-%{_bindir}/libcare-server
-%{_unitdir}/libcare.service
-%{_unitdir}/libcare.socket
 %{_presetdir}/90-libcare.preset
 
 %files devel
@@ -127,6 +99,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/kpatch_gensrc
 %{_bindir}/kpatch_strip
 %{_bindir}/kpatch_make
+%{_bindir}/libcare-server
+%{_bindir}/libcare-client
 
 %if 0%{with selinux}
 
@@ -169,6 +143,9 @@ exit 0
 %endif
 
 %changelog
+* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.3
+- libcareplus.spec:remove libcare.service and libcare.socket
+
 * Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.2
 - gensrc: we should add align while FLAGS_PUSH_SECTION flag is set
 - elf: add section adderss for STT_NOTYPE type of symbol
