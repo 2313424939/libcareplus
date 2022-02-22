@@ -3,12 +3,13 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 0
+Release: 1
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
 Source0: %{name}-%{version}.tar.gz
 
+Patch0001: fix-cblock-parse-for-LCOLD-LHOT-.cold.NUM-.init_arra.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -166,6 +167,9 @@ exit 0
 %endif
 
 %changelog
+* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.1
+- fix cblock parse for LCOLD/LHOT/.cold.NUM, .init_array and support gnu_unique_object
+
 * Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.0
 - package init 1.0.0
 
