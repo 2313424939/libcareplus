@@ -1,0 +1,32 @@
+From 9d601f4c697a9b2d926d92025bb43dd6ebf36033 Mon Sep 17 00:00:00 2001
+From: Bihong Yu <yubihong@huawei.com>
+Date: Tue, 18 Jan 2022 19:29:12 +0800
+Subject: [PATCH] gensrc: we should add align while FLAGS_PUSH_SECTION flag is
+ set
+
+In order to ensure the .kpatch.text readable and executable and
+the .kpatch.data readable and writeable, we should make sure the
+.kpatch.data is page-align. So we should add align while the
+.kpatch.data being pushed for the first time.
+
+Signed-off-by: Bihong Yu <yubihong@huawei.com>
+---
+ src/kpatch_gensrc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/kpatch_gensrc.c b/src/kpatch_gensrc.c
+index 32c7afc..bf1832a 100644
+--- a/src/kpatch_gensrc.c
++++ b/src/kpatch_gensrc.c
+@@ -448,7 +448,7 @@ static void change_section(struct kp_file *fout, struct section_desc *sect, int
+ 		s = ".kpatch.text,\"ax\",@progbits";
+ 	else {
+ 		s = ".kpatch.data,\"aw\",@progbits";
+-		if (!init_data_section && !(flags & FLAG_PUSH_SECTION)) {
++		if (!init_data_section && (flags & FLAG_PUSH_SECTION)) {
+ 			init_data_section = 1;
+ 			align = ".p2align\t12";
+ 		}
+-- 
+2.27.0
+
