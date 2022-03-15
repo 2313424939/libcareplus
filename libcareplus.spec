@@ -3,7 +3,7 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 5
+Release: 6
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -17,6 +17,7 @@ Patch0005: gitignore-ignore-some-tests-and-binary.patch
 Patch0006: libcare-patch-make-adapt-libcare-patch-make-to-meson.patch
 Patch0007: kpatch_elf-compatible-with-older-versions-of-the-so-.patch
 Patch0008: kpatch_parse-fix-failed-to-recognize-.cold.patch
+Patch0009: help-modify-some-help-information.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -148,7 +149,10 @@ exit 0
 %endif
 
 %changelog
-* Wed Mar 02 2033 imxcc <xingchaochao@huawei.com> - 1.0.0.5
+* Tue Mar 15 2022 yezengruan <yezengruan@huawei.com> 1.0.0.6
+- help: modify some help information
+
+* Wed Mar 02 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.5
 - kpatch_elf: compatible with older versions of the so naming rules
 - kpatch_parse: fix failed to recognize .cold
 
