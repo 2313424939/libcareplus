@@ -3,7 +3,7 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 3
+Release: 6
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -12,6 +12,12 @@ Source0: %{name}-%{version}.tar.gz
 Patch0001: fix-cblock-parse-for-LCOLD-LHOT-.cold.NUM-.init_arra.patch
 Patch0002: gensrc-we-should-add-align-while-FLAGS_PUSH_SECTION-.patch
 Patch0003: elf-add-section-adderss-for-STT_NOTYPE-type-of-symbo.patch
+Patch0004: elf-strip-adapt-to-new-gcc-version-10.3.1.patch
+Patch0005: gitignore-ignore-some-tests-and-binary.patch
+Patch0006: libcare-patch-make-adapt-libcare-patch-make-to-meson.patch
+Patch0007: kpatch_elf-compatible-with-older-versions-of-the-so-.patch
+Patch0008: kpatch_parse-fix-failed-to-recognize-.cold.patch
+Patch0009: help-modify-some-help-information.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -143,6 +149,18 @@ exit 0
 %endif
 
 %changelog
+* Tue Mar 15 2022 yezengruan <yezengruan@huawei.com> 1.0.0.6
+- help: modify some help information
+
+* Wed Mar 02 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.5
+- kpatch_elf: compatible with older versions of the so naming rules
+- kpatch_parse: fix failed to recognize .cold
+
+* Mon Feb 28 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.4
+- libcare-patch-make: adapt libcare-patch-make to meson
+- gitignore: ignore some tests and binary
+- elf/strip: adapt to new gcc version(10.3.1)
+
 * Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.3
 - libcareplus.spec:remove libcare.service and libcare.socket
 

@@ -1,0 +1,38 @@
+From b7bd30b1ff5408e52cb67cee6ef0f8df73e5f802 Mon Sep 17 00:00:00 2001
+From: jiang-dawei15 <jiangdawei15@huawei.com>
+Date: Wed, 9 Mar 2022 11:50:02 +0800
+Subject: [PATCH] help: modify some help information
+
+---
+ src/kpatch_user.c      | 1 -
+ src/libcare-patch-make | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/kpatch_user.c b/src/kpatch_user.c
+index 0bcc219..add74ea 100644
+--- a/src/kpatch_user.c
++++ b/src/kpatch_user.c
+@@ -376,7 +376,6 @@ static int usage(const char *err)
+ 	fprintf(stderr, "  patch  - apply patch to a user-space process\n");
+ 	fprintf(stderr, "  unpatch- unapply patch from a user-space process\n");
+ 	fprintf(stderr, "  info   - show info on applied patches\n");
+-	fprintf(stderr, "  server - listen on a unix socket for commands\n");
+ 	return -1;
+ }
+ 
+diff --git a/src/libcare-patch-make b/src/libcare-patch-make
+index ad1b566..9a75e1f 100755
+--- a/src/libcare-patch-make
++++ b/src/libcare-patch-make
+@@ -20,7 +20,7 @@ install with specified DESTDIR.
+ 		working on patch utils.
+   -d --destdir	specify variable makefile system uses to specify destination
+ 		directory for the installation
+-  -i --id>-give this patch an unique id (less than 7 char)
++  -i --id	give this patch an unique id (less than 7 char)
+   -b --buildid	give this patch an unique build-id
+   -j --jobs 	specify variable makefile system jobs of compile, for example
+   		`make -j 4` is startup `4` jobs to compile.
+-- 
+2.27.0
+
