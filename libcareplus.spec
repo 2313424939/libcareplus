@@ -3,7 +3,7 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 6
+Release: 7
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -18,6 +18,7 @@ Patch0006: libcare-patch-make-adapt-libcare-patch-make-to-meson.patch
 Patch0007: kpatch_elf-compatible-with-older-versions-of-the-so-.patch
 Patch0008: kpatch_parse-fix-failed-to-recognize-.cold.patch
 Patch0009: help-modify-some-help-information.patch
+Patch0010: libcare-patch-make-fix-some-bugs.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -149,6 +150,9 @@ exit 0
 %endif
 
 %changelog
+* Mon Mar 21 2022 yezengruan <yezengruan@huawei.com> 1.0.0.7
+- libcare-patch-make: fix some bugs
+
 * Tue Mar 15 2022 yezengruan <yezengruan@huawei.com> 1.0.0.6
 - help: modify some help information
 
