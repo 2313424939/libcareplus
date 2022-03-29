@@ -3,7 +3,7 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 7
+Release: 8
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -19,6 +19,7 @@ Patch0007: kpatch_elf-compatible-with-older-versions-of-the-so-.patch
 Patch0008: kpatch_parse-fix-failed-to-recognize-.cold.patch
 Patch0009: help-modify-some-help-information.patch
 Patch0010: libcare-patch-make-fix-some-bugs.patch
+Patch0011: selinux-enable-libcare-ctl-to-mprotect-qemu-process.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -150,6 +151,9 @@ exit 0
 %endif
 
 %changelog
+* Tue Mar 29 2022 yezengruan <yezengruan@huawei.com> 1.0.0.8
+- selinux: enable libcare-ctl to mprotect qemu process
+
 * Mon Mar 21 2022 yezengruan <yezengruan@huawei.com> 1.0.0.7
 - libcare-patch-make: fix some bugs
 
