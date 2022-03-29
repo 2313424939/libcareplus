@@ -1,0 +1,27 @@
+From 2724af94241663c9877e270c645dfcea124dc92c Mon Sep 17 00:00:00 2001
+From: jiang-dawei15 <jiangdawei15@huawei.com>
+Date: Tue, 29 Mar 2022 20:32:43 +0800
+Subject: [PATCH] selinux: enable libcare-ctl to mprotect qemu process
+
+Signed-off-by: Bihong Yu <yubihong@huawei.com>
+---
+ dist/selinux/libcare.te | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/dist/selinux/libcare.te b/dist/selinux/libcare.te
+index c240875..670c026 100644
+--- a/dist/selinux/libcare.te
++++ b/dist/selinux/libcare.te
+@@ -52,6 +52,9 @@ allow libcare_t libcare_file_t: lnk_file read_lnk_file_perms;
+ # to read patient's /proc entries and be able to attach to it
+ allow libcare_t self: capability { dac_override dac_read_search sys_ptrace };
+ 
++# need by remote mprotect
++allow svirt_t self : process execmem;
++
+ allow libcare_t svirt_t : process ptrace;
+ allow libcare_t svirt_t : dir list_dir_perms;
+ allow libcare_t svirt_t : file rw_file_perms;
+-- 
+2.27.0
+
