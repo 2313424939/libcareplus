@@ -3,7 +3,7 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 8
+Release: 9
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -151,50 +151,54 @@ exit 0
 %endif
 
 %changelog
-* Tue Mar 29 2022 yezengruan <yezengruan@huawei.com> 1.0.0.8
+* Wed Apr 27 2022 yezengruan <yezengruan@huawei.com> 1.0.0-9
+- update the format of changelog
+
+* Tue Mar 29 2022 yezengruan <yezengruan@huawei.com> 1.0.0-8
 - selinux: enable libcare-ctl to mprotect qemu process
 
-* Mon Mar 21 2022 yezengruan <yezengruan@huawei.com> 1.0.0.7
+* Mon Mar 21 2022 yezengruan <yezengruan@huawei.com> 1.0.0-7
 - libcare-patch-make: fix some bugs
 
-* Tue Mar 15 2022 yezengruan <yezengruan@huawei.com> 1.0.0.6
+* Tue Mar 15 2022 yezengruan <yezengruan@huawei.com> 1.0.0-6
 - help: modify some help information
 
-* Wed Mar 02 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.5
+* Wed Mar 02 2022 imxcc <xingchaochao@huawei.com> - 1.0.0-5
 - kpatch_elf: compatible with older versions of the so naming rules
 - kpatch_parse: fix failed to recognize .cold
 
-* Mon Feb 28 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.4
+* Mon Feb 28 2022 imxcc <xingchaochao@huawei.com> - 1.0.0-4
 - libcare-patch-make: adapt libcare-patch-make to meson
 - gitignore: ignore some tests and binary
 - elf/strip: adapt to new gcc version(10.3.1)
 
-* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.3
+* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0-3
 - libcareplus.spec:remove libcare.service and libcare.socket
 
-* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.2
+* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0-2
 - gensrc: we should add align while FLAGS_PUSH_SECTION flag is set
 - elf: add section adderss for STT_NOTYPE type of symbol
 
-* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.1
+* Tue Feb 22 2022 imxcc <xingchaochao@huawei.com> - 1.0.0-1
 - fix cblock parse for LCOLD/LHOT/.cold.NUM, .init_array and support gnu_unique_object
 
-* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 1.0.0.0
-- package init 1.0.0
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 1.0.0-0
+- package init 1.0.0-0
 
-* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4.15
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4-15
 - kpatch_user: init pid in cmd_info_user
-* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4.14
+
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4-14
 - some bugfix
 - support aarch64 UT
 - fix memory RWX problem
 
-* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4.13
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4-13
 - add libcare-dump tool
 - support test sets running on x86
 - some bugfixs
 
-* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4.12
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4-12
 - src/Makefile: execute config scripts before building
 - kpatch_gensrc.c: support ignoring functions which we don't need
 - arch/aarch64/arch_parse: modify is_variable_start for arm asm
@@ -207,23 +211,23 @@ exit 0
 - process: fix region start calculation
 - aarch64/arch_elf: Add ldr and ldrb relocation for aarch6
 
-* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4.11
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4-11
 - kpatch_cc: support gcc -MQ option
 - libcare-cc: add gcc iquote option support
 
-* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4.10
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4-10
 - kpatch_user.c: fix gcc warning
 
-* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4.9
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4-9
 - libcare-patch-make: add `-j|--jobs` option
 
-* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4.8
+* Mon Feb 07 2022 imxcc <xingchaochao@huawei.com> - 0.1.4-8
 - updated the README.en.md file
 
-* Wed Sep 08 2021 imxcc <xingchaochao@huawei.com> - 0.1.4.7
+* Wed Sep 08 2021 imxcc <xingchaochao@huawei.com> - 0.1.4-7
 - selinux: Allow init_t create lnk file
 
-* Thu Sep 02 2021 imxcc <xingchaochao@huawei.com> - 0.1.4.6
+* Thu Sep 02 2021 imxcc <xingchaochao@huawei.com> - 0.1.4-6
 - enable selinux
 
 * Sat Aug 21 2021 caodongxia <caodongxia@huawei.com> - 0.1.4-5
@@ -238,5 +242,5 @@ exit 0
 * Mon Dec 28 2020 sunguoshuai <sunguoshuai@huawei.com> - 0.1.4-2
 - Del the {dist} in release.
 
-* Tue Dec 8 2020 Ying Fang <fangying1@huawei.com>
+* Tue Dec 8 2020 Ying Fang <fangying1@huawei.com> - 0.1.4-1
 - Init the libcareplus package spec
