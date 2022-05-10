@@ -3,7 +3,7 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 9
+Release: 10
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -20,6 +20,8 @@ Patch0008: kpatch_parse-fix-failed-to-recognize-.cold.patch
 Patch0009: help-modify-some-help-information.patch
 Patch0010: libcare-patch-make-fix-some-bugs.patch
 Patch0011: selinux-enable-libcare-ctl-to-mprotect-qemu-process.patch
+Patch0012: libcare-dump-change-the-return-value.patch
+Patch0013: gensrc-skip-vector-instruction-in-str_do_gotpcrel.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -151,6 +153,10 @@ exit 0
 %endif
 
 %changelog
+* Tue May 10 2022 yezengruan <yezengruan@huawei.com> 1.0.0-10
+- libcare-dump: change the return value
+- gensrc: skip vector instruction in str_do_gotpcrel
+
 * Wed Apr 27 2022 yezengruan <yezengruan@huawei.com> 1.0.0-9
 - update the format of changelog
 
