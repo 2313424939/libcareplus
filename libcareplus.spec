@@ -3,7 +3,7 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 10
+Release: 11
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -22,6 +22,7 @@ Patch0010: libcare-patch-make-fix-some-bugs.patch
 Patch0011: selinux-enable-libcare-ctl-to-mprotect-qemu-process.patch
 Patch0012: libcare-dump-change-the-return-value.patch
 Patch0013: gensrc-skip-vector-instruction-in-str_do_gotpcrel.patch
+Patch0014: modify-pkgbuild-to-make-kpatch-for-RPM-based-packages.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -88,6 +89,9 @@ make -C dist/selinux install \
 
 
 install -m 0644 -D dist/libcare.preset %{buildroot}%{_presetdir}/90-libcare.preset
+install -m 0500 scripts/pkgbuild %{buildroot}%{_bindir}/libcare-pkgbuild
+install -m 0500 scripts/de-offset-syms.awk %{buildroot}%{_bindir}/de-offset-syms.awk
+install -m 0644 -D scripts/example_info %{buildroot}/usr/share/libcareplus/qemu_example_info
 
 %pre
 /usr/sbin/groupadd libcare -r 2>/dev/null || :
@@ -111,6 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/kpatch_make
 %{_bindir}/libcare-server
 %{_bindir}/libcare-client
+%{_bindir}/libcare-pkgbuild
+%{_bindir}/de-offset-syms.awk
+/usr/share/libcareplus/qemu_example_info
 
 %if 0%{with selinux}
 
@@ -153,6 +160,9 @@ exit 0
 %endif
 
 %changelog
+* Wed May 11 2022 Cichen Wang <wangcichen_yewu@cmss.chinamobile.com> 1.0.0-11
+- modify scripts/pkgbuild to make kpatch'es for the RPM-based packages
+
 * Tue May 10 2022 yezengruan <yezengruan@huawei.com> 1.0.0-10
 - libcare-dump: change the return value
 - gensrc: skip vector instruction in str_do_gotpcrel
