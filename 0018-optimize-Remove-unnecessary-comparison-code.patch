@@ -1,0 +1,39 @@
+From 5667441f87ef702ed537aba7c677eee1b36f1ead Mon Sep 17 00:00:00 2001
+From: wangcichen <wangcichen_yewu@cmss.chinamobile.com>
+Date: Fri, 27 May 2022 17:08:28 +0800
+Subject: [PATCH 5/5] optimize: Remove unnecessary comparison code
+
+---
+ src/arch/aarch64/arch_elf.c | 2 +-
+ src/arch/x86/arch_elf.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/arch/aarch64/arch_elf.c b/src/arch/aarch64/arch_elf.c
+index 9ce586d..10399ee 100644
+--- a/src/arch/aarch64/arch_elf.c
++++ b/src/arch/aarch64/arch_elf.c
+@@ -202,7 +202,7 @@ int kpatch_arch_apply_relocate_add(struct object_file *o, GElf_Shdr *relsec)
+ 		unsigned long val;
+ 		void *loc, *loc2;
+ 
+-		if (r->r_offset < 0 || r->r_offset >= tshdr->sh_size) {
++		if (r->r_offset >= tshdr->sh_size) {
+ 			kperr("Relocation offset for section '%s'"
+ 			      " is at 0x%lx beyond the section size 0x%lx\n",
+ 			      scnname, r->r_offset, tshdr->sh_size);
+diff --git a/src/arch/x86/arch_elf.c b/src/arch/x86/arch_elf.c
+index 265fd37..f79a996 100644
+--- a/src/arch/x86/arch_elf.c
++++ b/src/arch/x86/arch_elf.c
+@@ -56,7 +56,7 @@ int kpatch_arch_apply_relocate_add(struct object_file *o, GElf_Shdr *relsec)
+ 		unsigned long val;
+ 		void *loc, *loc2;
+ 
+-		if (r->r_offset < 0 || r->r_offset >= tshdr->sh_size) {
++		if (r->r_offset >= tshdr->sh_size) {
+ 			kperr("Relocation offset for section '%s'"
+ 			      " is at 0x%lx beyond the section size 0x%lx\n",
+ 			      scnname, r->r_offset, tshdr->sh_size);
+-- 
+2.27.0
+
