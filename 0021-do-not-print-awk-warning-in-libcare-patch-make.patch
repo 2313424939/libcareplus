@@ -1,0 +1,25 @@
+From fce7fbc7ad2e830c5efc817e31da45f0e6a48a47 Mon Sep 17 00:00:00 2001
+From: jiang-dawei15 <jiangdawei15@huawei.com>
+Date: Fri, 16 Sep 2022 19:31:28 +0800
+Subject: [PATCH] do not print awk warning in libcare-patch-make
+
+---
+ src/libcare-patch-make | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/libcare-patch-make b/src/libcare-patch-make
+index 3cd2fe9..9476063 100755
+--- a/src/libcare-patch-make
++++ b/src/libcare-patch-make
+@@ -78,7 +78,7 @@ restore_origs() {
+ 			{ vers[fname] = origfname; }
+ 	}
+ 	END { for (f in vers) system("mv " vers[f] " " f); }
+-'
++' > /dev/null 2>&1
+ }
+ 
+ trap "restore_origs" 0
+-- 
+2.27.0
+
