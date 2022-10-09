@@ -1,0 +1,156 @@
+From add4a57f47eb89acf4a471253654cc806aedaaf8 Mon Sep 17 00:00:00 2001
+From: ctyunsystem <ctyuncommiter05@chinatelecom.cn>
+Date: Wed, 11 May 2022 10:20:26 +0800
+Subject: [PATCH 3/5] fix patched process crashing when acccess the global var
+ which newly added
+
+---
+ src/kpatch_gensrc.c        | 20 +++++++++++++++++---
+ src/kpatch_patch.c         |  6 +++---
+ tests/new_var/Makefile     |  2 ++
+ tests/new_var/desc         |  1 +
+ tests/new_var/new_var.c    | 23 +++++++++++++++++++++++
+ tests/new_var/new_var.diff | 15 +++++++++++++++
+ 6 files changed, 61 insertions(+), 6 deletions(-)
+ create mode 100644 tests/new_var/Makefile
+ create mode 100644 tests/new_var/desc
+ create mode 100644 tests/new_var/new_var.c
+ create mode 100644 tests/new_var/new_var.diff
+
+diff --git a/src/kpatch_gensrc.c b/src/kpatch_gensrc.c
+index bf1832a..67254d7 100644
+--- a/src/kpatch_gensrc.c
++++ b/src/kpatch_gensrc.c
+@@ -432,6 +432,20 @@ out:
+ 
+ /* ------------------------------------------ helpers -------------------------------------------- */
+ 
++static inline int page_shift(int n) {
++	int res = -1;
++
++	while(n) {
++		res++;
++		n >>= 1;
++	}
++
++	return res;
++}
++
++#define PAGE_SIZE getpagesize()
++#define PAGE_SHIFT page_shift(PAGE_SIZE)
++
+ static void change_section(struct kp_file *fout, struct section_desc *sect, int flags)
+ {
+ 	static int init_data_section = 0;
+@@ -448,15 +462,15 @@ static void change_section(struct kp_file *fout, struct section_desc *sect, int
+ 		s = ".kpatch.text,\"ax\",@progbits";
+ 	else {
+ 		s = ".kpatch.data,\"aw\",@progbits";
+-		if (!init_data_section && (flags & FLAG_PUSH_SECTION)) {
++		if (!init_data_section) {
+ 			init_data_section = 1;
+-			align = ".p2align\t12";
++			align = ".p2align";
+ 		}
+ 	}
+ 
+ 	fprintf(fout->f, "\t.%ssection %s\n", (flags & FLAG_PUSH_SECTION) ? "push" : "", s);
+ 	if (align)
+-		fprintf(fout->f, "\t%s\n", align);
++		fprintf(fout->f, "\t%s\t%d\n", align, PAGE_SHIFT);
+ }
+ 
+ void get_comm_args(struct kp_file *f, int l, kpstr_t *xname, int *sz, int *align)
+diff --git a/src/kpatch_patch.c b/src/kpatch_patch.c
+index d74299d..3b53a5a 100644
+--- a/src/kpatch_patch.c
++++ b/src/kpatch_patch.c
+@@ -372,9 +372,9 @@ object_apply_patch(struct object_file *o)
+ 		kp->jmp_offset = sz;
+ 		kpdebug("Jump table %d bytes for %d syms at offset 0x%x\n",
+ 			o->jmp_table->size, undef, kp->jmp_offset);
+-		sz = ROUND_UP(sz + o->jmp_table->size, 4096);
++		sz = ROUND_UP(sz + o->jmp_table->size, PAGE_SIZE);
+ 	}
+-	sz = ROUND_UP(sz, 4096);
++	sz = ROUND_UP(sz, PAGE_SIZE);
+ 
+ 	/* kpatch elf */
+ 	kp->elf_offset = sz;
+@@ -386,7 +386,7 @@ object_apply_patch(struct object_file *o)
+ 	kp->user_undo = sz;
+ 	sz = ROUND_UP(sz + HUNK_SIZE * o->ninfo, 16);
+ 
+-	sz = ROUND_UP(sz, 4096);
++	sz = ROUND_UP(sz, PAGE_SIZE);
+ 	kp->kpatch_total_mem_sz = sz;
+ 
+ 	/*
+diff --git a/tests/new_var/Makefile b/tests/new_var/Makefile
+new file mode 100644
+index 0000000..6dd4b69
+--- /dev/null
++++ b/tests/new_var/Makefile
+@@ -0,0 +1,2 @@
++
++include ../makefile.inc
+diff --git a/tests/new_var/desc b/tests/new_var/desc
+new file mode 100644
+index 0000000..4f8cd31
+--- /dev/null
++++ b/tests/new_var/desc
+@@ -0,0 +1 @@
++patch adds a new var
+diff --git a/tests/new_var/new_var.c b/tests/new_var/new_var.c
+new file mode 100644
+index 0000000..3ed116a
+--- /dev/null
++++ b/tests/new_var/new_var.c
+@@ -0,0 +1,23 @@
++#include <stdio.h>
++#include <unistd.h>
++
++void print_greetings_patched(int var)
++{
++	printf("Hello. This is a PATCHED version\n");
++	printf("Hello. <newly_added_var=0x%08x>\n", var);
++}
++
++void print_greetings(void)
++{
++	printf("Hello. This is an UNPATCHED version\n");
++}
++
++int main()
++{
++	while (1) {
++		print_greetings();
++		sleep(1);
++	}
++
++	return 0;
++}
+diff --git a/tests/new_var/new_var.diff b/tests/new_var/new_var.diff
+new file mode 100644
+index 0000000..c617535
+--- /dev/null
++++ b/tests/new_var/new_var.diff
+@@ -0,0 +1,15 @@
++--- ./new_var.c	2022-02-10 19:40:17.948981115 +0800
+++++ ./new_var.c	2022-02-10 20:02:38.774536002 +0800
++@@ -7,9 +7,11 @@
++ 	printf("Hello. <newly_added_var=0x%08x>\n", var);
++ }
++ 
+++int newly_added_var = 0x20220210;
++ void print_greetings(void)
++ {
++-	printf("Hello. This is an UNPATCHED version\n");
+++	newly_added_var = 0x2022 << 16 | 0x2202;
+++	print_greetings_patched(newly_added_var);
++ }
++ 
++ int main()
+-- 
+2.27.0
+
