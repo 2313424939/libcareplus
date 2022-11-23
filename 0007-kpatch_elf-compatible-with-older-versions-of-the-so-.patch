@@ -4,7 +4,7 @@ Date: Tue, 1 Mar 2022 16:07:37 +0800
 Subject: [PATCH 1/2] kpatch_elf: compatible with older versions of the so
  naming rules
 
-New openEuler so naming rules have been changed, such as:
+The so naming rules have been changed, such as:
   old so naming rules: libc-x.y.z.so
     <----->
   new so naming rules: libc.so.x.y.z
