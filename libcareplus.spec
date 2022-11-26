@@ -7,7 +7,7 @@ Release: 1
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
-Source0: https://gitee.com/openeuler/libcareplus/release/download/v%{version}/%{name}-%{version}.tar.gz
+Source0: https://gitee.com/openeuler/libcareplus/releases/download/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
