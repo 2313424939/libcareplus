@@ -1,36 +1,13 @@
 %define with_selinux 1
 
-Version: 1.0.0
+Version: 1.0.1
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 13
+Release: 1
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
-Source0: %{name}-%{version}.tar.gz
-
-Patch0000: 0000-gensrc-skip-vector-instruction-in-str_do_gotpcrel.patch
-Patch0001: 0001-gensrc-we-should-add-align-while-FLAGS_PUSH_SECTION-.patch
-Patch0002: 0002-fix-cblock-parse-for-LCOLD-LHOT-.cold.NUM-.init_arra.patch
-Patch0003: 0003-elf-add-section-adderss-for-STT_NOTYPE-type-of-symbo.patch
-Patch0004: 0004-elf-strip-adapt-to-new-gcc-version-10.3.1.patch
-Patch0005: 0005-gitignore-ignore-some-tests-and-binary.patch
-Patch0006: 0006-libcare-patch-make-adapt-libcare-patch-make-to-meson.patch
-Patch0007: 0007-kpatch_elf-compatible-with-older-versions-of-the-so-.patch
-Patch0008: 0008-kpatch_parse-fix-failed-to-recognize-.cold.patch
-Patch0009: 0009-help-modify-some-help-information.patch
-Patch0010: 0010-libcare-patch-make-fix-some-bugs.patch
-Patch0011: 0011-selinux-enable-libcare-ctl-to-mprotect-qemu-process.patch
-Patch0012: 0012-libcare-dump-change-the-return-value.patch
-Patch0013: 0013-modify-pkgbuild-to-make-kpatch-for-RPM-based-packages.patch
-Patch0014: 0014-kpatch_process-fix-possible-double-free.patch
-Patch0015: 0015-ptrace-fix-NULL-pointer-access-problem.patch
-Patch0016: 0016-fix-patched-process-crashing-when-acccess-the-global.patch
-Patch0017: 0017-fix-probably-restore-cc-symbol-link-fail-when-kill-p.patch
-Patch0018: 0018-optimize-Remove-unnecessary-comparison-code.patch
-Patch0019: 0019-Revert-fix-probably-restore-cc-symbol-link-fail-when.patch
-Patch0020: 0020-fix-probably-restore-cc-symbol-link-fail-when-kill-p.patch
-Patch0021: 0021-do-not-print-awk-warning-in-libcare-patch-make.patch
+Source0: https://gitee.com/openeuler/libcareplus/release/download/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
 
@@ -168,6 +145,10 @@ exit 0
 %endif
 
 %changelog
+* Thu Nov 24 2022 yezengruan <yezengruan@huawei.com> 1.0.1-1
+- update libcareplus download url and package
+- libcareplus update to version 1.0.1
+
 * Fri Sep 16 2022 yezengruan <yezengruan@huawei.com> 1.0.0-13
 - do not print awk warning in libcare-patch-make
 
