@@ -3,7 +3,7 @@
 Version: 1.0.0
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 13
+Release: 14
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
@@ -33,6 +33,7 @@ Patch0020: 0020-fix-probably-restore-cc-symbol-link-fail-when-kill-p.patch
 Patch0021: 0021-do-not-print-awk-warning-in-libcare-patch-make.patch
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
+Requires: binutils elfutils elfutils-libelf-devel libunwind-devel
 
 %if 0%{with selinux}
 BuildRequires: checkpolicy
@@ -168,6 +169,9 @@ exit 0
 %endif
 
 %changelog
+* Fri Jan 6 2023 lvgenggeng <lvgenggeng@uniontech.com> 1.0.0-14
+* fix runtime dependencies
+
 * Fri Sep 16 2022 yezengruan <yezengruan@huawei.com> 1.0.0-13
 - do not print awk warning in libcare-patch-make
 
