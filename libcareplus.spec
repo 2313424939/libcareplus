@@ -3,13 +3,14 @@
 Version: 1.0.1
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 1
+Release: 2
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
 Source0: https://gitee.com/openeuler/libcareplus/releases/download/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
+Requires: binutils elfutils elfutils-libelf-devel libunwind-devel
 
 %if 0%{with selinux}
 BuildRequires: checkpolicy
@@ -145,6 +146,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Jan 11 2023 lvgenggeng <lvgenggeng@uniontech.com> 1.0.1-2
+- fix runtime dependencies
+
 * Thu Nov 24 2022 yezengruan <yezengruan@huawei.com> 1.0.1-1
 - update libcareplus download url and package
 - libcareplus update to version 1.0.1
