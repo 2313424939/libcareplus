@@ -1,0 +1,74 @@
+diff -u -r libcareplus-1.0.1/src/kpatch_user.c libcareplus-1.0.1/src/kpatch_user.c
+--- libcareplus-1.0.1/src/kpatch_user.c	2022-11-26 10:10:56.000000000 +0800
++++ libcareplus-1.0.1/src/kpatch_user.c	2023-04-29 09:19:05.000000000 +0800
+@@ -105,7 +105,7 @@
+ 
+ int cmd_patch_user(int argc, char *argv[])
+ {
+-	int opt, pid = -1, is_pid_set = 0, ret;
++	int opt, pid = -1, is_pid_set = 0, ret = 0;
+ 	const char *storage_path;
+ 
+ 	if (argc < 4)
+diff -u -r libcareplus-1.0.1/src/libcare-server.c libcareplus-1.0.1/src/libcare-server.c
+--- libcareplus-1.0.1/src/libcare-server.c	2022-11-26 10:10:56.000000000 +0800
++++ libcareplus-1.0.1/src/libcare-server.c	2023-04-29 09:18:14.000000000 +0800
+@@ -204,7 +204,7 @@
+ 	static int
+ server_bind_socket(const char *path)
+ {
+-	int sfd = -1, rv, sockaddr_len;
++	int sfd = -1, rv = 0, sockaddr_len;
+ 	struct sockaddr_un sockaddr;
+ 
+ 	/* Handle invocation by libcare.service */
+diff -u -r libcareplus-1.0.1/src/Makefile libcareplus-1.0.1/src/Makefile
+--- libcareplus-1.0.1/src/Makefile	2022-11-26 10:10:56.000000000 +0800
++++ libcareplus-1.0.1/src/Makefile	2023-04-29 09:31:18.000000000 +0800
+@@ -10,7 +10,7 @@
+ 
+ SRC_PATH := $(shell pwd)
+ 
+-CC = gcc
++CC ?= gcc
+ CFLAGS_MISC = -Wall -Werror -g -O2 -D_GNU_SOURCE -D_FORTIFY_SOURCE=2 -I $(SRC_PATH)
+ 
+ cc-option = $(shell if $(CC) $(CFLAGS_MISC) $(1) -S -o /dev/null -xc /dev/null \
+@@ -48,11 +48,11 @@
+ 
+ libcare-ctl: libcare-ctl.o kpatch_user.o kpatch_storage.o kpatch_patch.o kpatch_elf.o kpatch_ptrace.o kpatch_coro.o arch_patch.o arch_elf.o arch_ptrace.o arch_coro.o
+ libcare-ctl: kpatch_process.o kpatch_common.o rbtree.o kpatch_log.o arch_process.o
+-libcare-ctl: LDLIBS += -lelf -lrt $(LIBUNWIND_LIBS)
++libcare-ctl: LDLIBS += -lelf -lrt $(LIBUNWIND_LIBS) -llzma
+ 
+ libcare-server: libcare-server.o kpatch_user.o kpatch_storage.o kpatch_patch.o kpatch_elf.o kpatch_ptrace.o kpatch_coro.o arch_patch.o arch_elf.o arch_ptrace.o arch_coro.o
+ libcare-server: kpatch_process.o kpatch_common.o rbtree.o kpatch_log.o arch_process.o
+-libcare-server: LDLIBS += -lelf -lrt $(LIBUNWIND_LIBS)
++libcare-server: LDLIBS += -lelf -lrt $(LIBUNWIND_LIBS) -llzma
+ 
+ libcare-client: libcare-client.o
+ 
+@@ -111,14 +111,14 @@
+ INSTALL ?= install
+ install: all
+ 	$(INSTALL) -d $(DESTDIR)/$(bindir)
+-	$(INSTALL) -m 0500 libcare-ctl $(DESTDIR)/$(bindir)/libcare-ctl
+-	$(INSTALL) -m 0500 libcare-server $(DESTDIR)/$(bindir)/libcare-server
+-	$(INSTALL) -m 0500 libcare-client $(DESTDIR)/$(bindir)/libcare-client
+-	$(INSTALL) -m 0500 libcare-cc $(DESTDIR)/$(bindir)/libcare-cc
+-	$(INSTALL) -m 0500 libcare-patch-make $(DESTDIR)/$(bindir)/libcare-patch-make
+-	$(INSTALL) -m 0500 kpatch_gensrc $(DESTDIR)/$(bindir)/kpatch_gensrc
+-	$(INSTALL) -m 0500 kpatch_make $(DESTDIR)/$(bindir)/kpatch_make
+-	$(INSTALL) -m 0500 kpatch_strip $(DESTDIR)/$(bindir)/kpatch_strip
+-	$(INSTALL) -m 0500 libcare-dump $(DESTDIR)/$(bindir)/libcare-dump
++	$(INSTALL) -m 0700 libcare-ctl $(DESTDIR)/$(bindir)/libcare-ctl
++	$(INSTALL) -m 0700 libcare-server $(DESTDIR)/$(bindir)/libcare-server
++	$(INSTALL) -m 0700 libcare-client $(DESTDIR)/$(bindir)/libcare-client
++	$(INSTALL) -m 0700 libcare-cc $(DESTDIR)/$(bindir)/libcare-cc
++	$(INSTALL) -m 0700 libcare-patch-make $(DESTDIR)/$(bindir)/libcare-patch-make
++	$(INSTALL) -m 0700 kpatch_gensrc $(DESTDIR)/$(bindir)/kpatch_gensrc
++	$(INSTALL) -m 0700 kpatch_make $(DESTDIR)/$(bindir)/kpatch_make
++	$(INSTALL) -m 0700 kpatch_strip $(DESTDIR)/$(bindir)/kpatch_strip
++	$(INSTALL) -m 0700 libcare-dump $(DESTDIR)/$(bindir)/libcare-dump
+ 
+ .PHONY:	all clean test tests tests-gensrc tests-strip
