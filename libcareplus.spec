@@ -3,13 +3,14 @@
 Version: 1.0.1
 Name: libcareplus
 Summary: LibcarePlus tools
-Release: 2
+Release: 3
 Group: Applications/System
 License: GPLv2
 Url: https://gitee.com/openeuler/libcareplus
 Source0: https://gitee.com/openeuler/libcareplus/releases/download/v%{version}/%{name}-%{version}.tar.gz
+Patch0:  fix-clang.patch
 
-BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd
+BuildRequires: elfutils-libelf-devel libunwind-devel gcc systemd xz-devel
 Requires: binutils elfutils elfutils-libelf-devel libunwind-devel
 
 %if 0%{with selinux}
@@ -146,6 +147,9 @@ exit 0
 %endif
 
 %changelog
+* Thu Jun 29 2023 yoo <sunyuechi@iscas.ac.cn> - 1.0.1-3
+- fix clang build error
+
 * Wed Jan 11 2023 lvgenggeng <lvgenggeng@uniontech.com> 1.0.1-2
 - fix runtime dependencies
 
