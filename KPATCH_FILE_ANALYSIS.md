@@ -39,6 +39,7 @@ readelf -S patch.elf
 
 ---
 
+
 ## 4. 设计说明
 
 - `.kpatch` 文件采用自定义头部，便于携带补丁元信息和校验数据。
@@ -46,5 +47,33 @@ readelf -S patch.elf
 - libcareplus 框架会自动解析 `.kpatch` 文件结构并加载内部 ELF 补丁。
 
 ---
+
+## 5. BuildID 校验机制
+
+在补丁注入前，libcare-ctl 会校验目标进程的 BuildID 与补丁目标 BuildID 是否一致，防止误打补丁。
+
+### 技术细节
+
+1. **提取补丁目标 BuildID**
+   - `.kpatch` 文件头部或嵌入的 ELF 区段中，包含目标二进制的 BuildID（通常为 SHA1 哈希）。
+   - libcare-ctl 解析补丁文件，读取并保存该 BuildID。
+
+2. **获取目标进程 BuildID**
+   - 通过 `/proc/<pid>/exe` 软链接，定位目标进程的主程序文件。
+   - 读取该 ELF 文件的 `.note.gnu.build-id` 段，提取 BuildID。
+   - 也可通过 `readelf -n /proc/<pid>/exe` 或直接解析 ELF 头部实现。
+
+3. **比对 BuildID**
+   - 将补丁目标 BuildID 与进程实际 BuildID 进行比对。
+   - 若不一致，则拒绝注入补丁并报错，防止因二进制不匹配导致崩溃或不可预期行为。
+
+### 相关源码参考
+- `src/kpatch_patch.c`：补丁 BuildID 解析与比对逻辑
+- `src/kpatch_elf_objinfo.c`：ELF BuildID 提取实现
+
+### 设计意义
+- 有效防止补丁打入错误进程，提升安全性和可靠性。
+- 支持多版本二进制的精确补丁管理。
+
 
 > 本文档梳理了 kpatch 文件结构及正确的分析方法，便于后续补丁调试与开发。
