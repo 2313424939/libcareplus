@@ -55,8 +55,13 @@ readelf -S patch.elf
 ### 技术细节
 
 1. **提取补丁目标 BuildID**
-   - `.kpatch` 文件头部或嵌入的 ELF 区段中，包含目标二进制的 BuildID（通常为 SHA1 哈希）。
-   - libcare-ctl 解析补丁文件，读取并保存该 BuildID。
+   - `.kpatch` 文件头部保存有补丁目标二进制的 BuildID 信息，通常为 SHA1 哈希。
+   - libcare-ctl 首先解析 `.kpatch` 文件头部，定位到 BuildID 字段（一般在固定偏移处，紧跟 magic 和版本号之后）。
+   - 若补丁内部嵌入的 ELF 区段也包含 BuildID，则进一步解析该 ELF 文件的 `.note.gnu.build-id` 段。
+   - 技术实现：
+     - 直接读取 `.kpatch` 文件的二进制内容，按格式解析出 BuildID 字节串。
+     - 或用 `readelf -n`、`objdump -s -j .note.gnu.build-id` 等工具分析嵌入的 ELF 区段（如需人工验证）。
+   - 相关源码：`src/kpatch_patch.c` 负责 kpatch 文件头解析，`src/kpatch_elf_objinfo.c` 负责 ELF BuildID 提取。
 
 2. **获取目标进程 BuildID**
    - 通过 `/proc/<pid>/exe` 软链接，定位目标进程的主程序文件。
